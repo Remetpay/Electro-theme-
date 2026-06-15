@@ -1,0 +1,11 @@
+body { margin: 0; font-family: Arial, sans-serif; background: #0b0f1a; color: #fff; }
+
+.site-header { padding: 10px 20px; background: #111827; }
+.top-bar { font-size: 12px; opacity: 0.8; text-align: center; }
+.main-header { display: flex; justify-content: space-between; align-items: center; }
+
+.hero-carousel { display: flex; overflow: auto; }
+.product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 20px; }
+.product-card { background: #111; padding: 10px; border-radius: 8px; }
+
+.site-footer { padding: 40px; background: #0a0a0a; }
