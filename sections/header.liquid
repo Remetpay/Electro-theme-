@@ -1,0 +1,28 @@
+<header class="site-header">
+  <div class="top-bar">
+    <p>Free Shipping Over Threshold • 30-Day Returns • Global Delivery</p>
+  </div>
+
+  <div class="main-header">
+    <a href="/" class="logo">{{ shop.name }}</a>
+
+    <nav class="nav">
+      {% for link in linklists.main-menu.links %}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {% endfor %}
+    </nav>
+
+    <div class="actions">
+      <input type="search" placeholder="Search products..." />
+      <a href="/account">Account</a>
+      <a href="/cart">Cart ({{ cart.item_count }})</a>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": []
+}
+{% endschema %}
