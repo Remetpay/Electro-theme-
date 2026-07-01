@@ -1,0 +1,25 @@
+<section class="section">
+  <div class="section-heading">
+    <span class="eyebrow">Collections</span>
+    <h1>Shop Gadget GRV Collections</h1>
+    <p>Browse curated phone accessories, smart gadgets, wireless audio, gaming accessories, smart home gear, wearables, charging essentials, and trending electronics.</p>
+  </div>
+  <div class="category-grid">
+    {% for collection in collections %}
+      {% unless collection.handle == 'frontpage' %}
+        <article class="category-card glass-card">
+          {% if collection.featured_image %}<img src="{{ collection.featured_image | image_url: width: 700 }}" alt="{{ collection.title | escape }}" loading="lazy" style="border-radius:18px;aspect-ratio:1.3;object-fit:cover;margin-bottom:18px">{% endif %}
+          <span class="eyebrow">{{ collection.products_count }} products</span>
+          <h3>{{ collection.title }}</h3>
+          <p>{{ collection.description | strip_html | truncate: 120 | default: 'Premium curated tech essentials for everyday upgrades.' }}</p>
+          <a href="{{ collection.url }}">Explore →</a>
+        </article>
+      {% endunless %}
+    {% else %}
+      <article class="category-card glass-card"><h3>No collections yet.</h3><p>Create Gadget GRV collections in Shopify to populate this page.</p></article>
+    {% endfor %}
+  </div>
+</section>
+{% schema %}
+{"name":"Main list collections","settings":[]}
+{% endschema %}
