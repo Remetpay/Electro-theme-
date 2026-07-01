@@ -1,0 +1,15 @@
+<section class="section cart-page">
+  <div class="section-heading"><span class="eyebrow">Cart</span><h1>Your Tech Upgrades</h1><p>Distraction-free cart with free shipping progress, trust badges, and a clear checkout path.</p></div>
+  {% if cart.item_count > 0 %}
+    <form action="{{ routes.cart_url }}" method="post">
+      <div class="shipping-progress"><span>Free shipping progress</span><div><i style="width:{% if cart.total_price > 7500 %}100{% else %}{{ cart.total_price | times: 100 | divided_by: 7500 }}{% endif %}%"></i></div><small>{% if cart.total_price >= 7500 %}Free shipping unlocked.{% else %}Spend {{ 7500 | minus: cart.total_price | money }} more for free shipping.{% endif %}</small></div>
+      {% for item in cart.items %}<div class="cart-line"><a href="{{ item.url }}">{% if item.image %}<img src="{{ item.image | image_url: width: 180 }}" alt="{{ item.image.alt | escape }}">{% endif %}</a><div><strong>{{ item.product.title }}</strong><p>{{ item.variant.title }}</p><input type="number" name="updates[]" value="{{ item.quantity }}" min="0"></div><strong>{{ item.final_line_price | money }}</strong></div>{% endfor %}
+      <div class="summary glass-card" style="padding:24px;margin-top:24px"><div><span>Subtotal</span><strong>{{ cart.total_price | money }}</strong></div><button class="btn" type="submit" name="update">Update Cart</button><button class="btn primary" type="submit" name="checkout">Checkout</button><p>🔒 Secure Shopify checkout • Easy returns • Quality checked products</p><div class="payment-row"><span>Visa</span><span>Mastercard</span><span>Amex</span><span>PayPal</span><span>Apple Pay</span></div></div>
+    </form>
+  {% else %}
+    <div class="glass-card" style="padding:32px"><h2>Your cart is empty.</h2><p>Start with best sellers, new arrivals, or charging essentials.</p><a class="btn primary" href="/collections/all">Shop Best Sellers</a></div>
+  {% endif %}
+</section>
+{% schema %}
+{"name":"Main cart","settings":[]}
+{% endschema %}

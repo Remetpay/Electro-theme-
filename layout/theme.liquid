@@ -1,23 +1,23 @@
 <!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{{ page_title }} - {{ shop.name }}</title>
-  {{ content_for_header }}
-  <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
-</head>
-<body>
-
-{% section 'announcement-bar' %}
-{% section 'header' %}
-
-<main id="MainContent">
-  {{ content_for_layout }}
-</main>
-
-{% section 'footer' %}
-
-<script src="{{ 'theme.js' | asset_url }}" defer></script>
-</body>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#02040b">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <title>{{ page_title }}{% if current_tags %} &ndash; {{ current_tags | join: ', ' }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+    {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+    {{ content_for_header }}
+    {{ 'gadget-grv.css' | asset_url | stylesheet_tag }}
+  </head>
+  <body class="template-{{ template.name }}">
+    <a class="skip-link" href="#MainContent">Skip to content</a>
+    {% section 'header' %}
+    <main id="MainContent" role="main">
+      {{ content_for_layout }}
+    </main>
+    {% section 'footer' %}
+    {% render 'cart-drawer' %}
+    {{ 'gadget-grv.js' | asset_url | script_tag }}
+  </body>
 </html>

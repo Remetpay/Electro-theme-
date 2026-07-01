@@ -1,0 +1,13 @@
+<div class="cart-overlay" data-cart-drawer aria-hidden="true">
+  <aside class="cart-drawer" role="dialog" aria-label="Cart drawer">
+    <button class="close-cart" type="button" data-close-cart aria-label="Close cart">×</button>
+    <h2>Your Cart</h2>
+    <div class="shipping-progress"><span>Free shipping progress</span><div><i style="width:{% if cart.total_price > 7500 %}100{% else %}{{ cart.total_price | times: 100 | divided_by: 7500 }}{% endif %}%"></i></div><small>{% if cart.total_price >= 7500 %}Free shipping unlocked.{% else %}Spend {{ 7500 | minus: cart.total_price | money }} more for free shipping.{% endif %}</small></div>
+    {% if cart.item_count > 0 %}
+      {% for item in cart.items %}<div class="cart-line"><a href="{{ item.url }}">{% if item.image %}<img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.image.alt | escape }}">{% endif %}</a><div><strong>{{ item.product.title }}</strong><span>{{ item.quantity }} × {{ item.final_price | money }}</span></div></div>{% endfor %}
+      <div class="summary"><div><span>Subtotal</span><strong>{{ cart.total_price | money }}</strong></div><a class="btn primary" href="{{ routes.checkout_url }}">Checkout</a><p>🔒 Secure checkout powered by Shopify.</p><div class="payment-row"><span>Visa</span><span>Mastercard</span><span>Amex</span><span>PayPal</span></div></div>
+    {% else %}
+      <p>Your cart is empty. Add premium tech essentials to start your order.</p><a class="btn primary" href="/collections/all">Shop Best Sellers</a>
+    {% endif %}
+  </aside>
+</div>

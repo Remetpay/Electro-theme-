@@ -1,0 +1,26 @@
+<section class="section">
+  <div class="section-heading">
+    <span class="eyebrow">Gadget GRV Journal</span>
+    <h1>{{ blog.title }}</h1>
+    <p>Buying guides, product education, and launch updates for premium electronics shoppers.</p>
+  </div>
+  <div class="discovery-grid">
+    {% paginate blog.articles by 12 %}
+      {% for article in blog.articles %}
+        <article class="discovery-card glass-card">
+          {% if article.image %}<img src="{{ article.image | image_url: width: 700 }}" alt="{{ article.image.alt | default: article.title | escape }}" loading="lazy" style="border-radius:18px;aspect-ratio:1.4;object-fit:cover;margin-bottom:18px">{% endif %}
+          <span class="eyebrow">{{ article.published_at | date: '%b %d, %Y' }}</span>
+          <h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
+          <p>{{ article.excerpt_or_content | strip_html | truncate: 150 }}</p>
+          <a href="{{ article.url }}">Read more →</a>
+        </article>
+      {% else %}
+        <article class="discovery-card glass-card"><h3>No articles yet.</h3><p>Add launch updates, product guides, and comparison content to build SEO authority.</p></article>
+      {% endfor %}
+      {% if paginate.pages > 1 %}<nav class="pagination">{{ paginate | default_pagination }}</nav>{% endif %}
+    {% endpaginate %}
+  </div>
+</section>
+{% schema %}
+{"name":"Main blog","settings":[]}
+{% endschema %}

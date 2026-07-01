@@ -1,28 +1,14 @@
 <header class="site-header">
-  <div class="top-bar">
-    <p>Free Shipping Over Threshold • 30-Day Returns • Global Delivery</p>
-  </div>
-
-  <div class="main-header">
-    <a href="/" class="logo">{{ shop.name }}</a>
-
-    <nav class="nav">
-      {% for link in linklists.main-menu.links %}
-        <a href="{{ link.url }}">{{ link.title }}</a>
-      {% endfor %}
-    </nav>
-
-    <div class="actions">
-      <input type="search" placeholder="Search products..." />
-      <a href="/account">Account</a>
-      <a href="/cart">Cart ({{ cart.item_count }})</a>
-    </div>
+  <a class="logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }} home"><span class="logo-mark">G</span>{{ section.settings.logo_text }}</a>
+  <nav class="desktop-nav" aria-label="Primary navigation">
+    {% for link in linklists[section.settings.menu].links %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
+  </nav>
+  <div class="header-actions">
+    <a class="icon-btn" href="{{ routes.search_url }}" aria-label="Search">⌕</a>
+    <a class="icon-btn icon-account" href="{{ routes.account_url }}" aria-label="Account">◎</a>
+    <button class="icon-btn" type="button" data-open-cart aria-label="Cart">🛍<span class="cart-count">{{ cart.item_count }}</span></button>
   </div>
 </header>
-
 {% schema %}
-{
-  "name": "Header",
-  "settings": []
-}
+{"name":"Header","settings":[{"type":"text","id":"logo_text","label":"Logo text","default":"Gadget GRV"},{"type":"link_list","id":"menu","label":"Menu","default":"main-menu"}]}
 {% endschema %}

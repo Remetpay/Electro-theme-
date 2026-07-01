@@ -1,0 +1,39 @@
+<section class="section product-template">
+  <div class="pdp-grid">
+    <div class="gallery glass-card">
+      {% if product.featured_image %}<img src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}">{% endif %}
+      <div class="thumbs">{% for image in product.images limit: 4 %}<img src="{{ image | image_url: width: 260 }}" alt="{{ image.alt | default: product.title | escape }}">{% endfor %}</div>
+    </div>
+    <div class="pdp-info">
+      {% if product.available %}<span class="sale-badge inline">Limited stock available — order soon.</span>{% endif %}
+      <h1>{{ product.title }}</h1>
+      <div class="rating-row"><span class="stars">★★★★★</span><span>4.8 from verified reviews</span></div>
+      <div class="price-row large"><strong>{{ product.selected_or_first_available_variant.price | money }}</strong>{% if product.compare_at_price > product.price %}<s>{{ product.compare_at_price | money }}</s><span>Sale</span>{% endif %}</div>
+      <ul class="benefit-list"><li>Premium tech essential selected for convenience, performance, and style.</li><li>Clear product details and secure Shopify checkout.</li><li>Fast processing, easy returns, and warranty reassurance.</li></ul>
+      {% form 'product', product %}
+        {% unless product.has_only_default_variant %}
+          <label style="display:grid;gap:8px;margin:18px 0;color:var(--muted)">Variant
+            <select name="id">
+              {% for variant in product.variants %}
+                <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected{% endif %} {% unless variant.available %}disabled{% endunless %}>{{ variant.title }}{% unless variant.available %} — Sold out{% endunless %}</option>
+              {% endfor %}
+            </select>
+          </label>
+        {% else %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        {% endunless %}
+        <label class="qty">Qty <input type="number" name="quantity" value="1" min="1"></label>
+        <div class="buy-actions"><button class="btn primary" type="submit" {% unless product.available %}disabled{% endunless %}>{% if product.available %}Add to Cart{% else %}Sold Out{% endif %}</button>{{ form | payment_button }}</div>
+      {% endform %}
+      <div class="badge-row"><span>🚚 Shipping</span><span>↩ Returns</span><span>✓ Warranty</span><span>🔒 Secure checkout</span></div>
+      <details open><summary>Description <span>⌄</span></summary><div>{{ product.description }}</div></details>
+      <details><summary>Specifications <span>⌄</span></summary><p>Use Shopify metafields for detailed specs, compatibility, dimensions, materials, and included accessories.</p></details>
+      <details><summary>Shipping & Delivery <span>⌄</span></summary><p>Orders are processed quickly with clear delivery estimates shown at checkout.</p></details>
+      <details><summary>Returns & Refunds <span>⌄</span></summary><p>Easy returns policy designed to reduce purchase risk.</p></details>
+      <details><summary>Warranty <span>⌄</span></summary><p>Warranty details can be customized by product or collection.</p></details>
+    </div>
+  </div>
+</section>
+{% schema %}
+{"name":"Main product","settings":[]}
+{% endschema %}

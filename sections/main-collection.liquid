@@ -1,0 +1,13 @@
+<section class="section collection-template">
+  <div class="collection-hero"><span class="eyebrow">Collection</span><h1>{{ collection.title }}</h1>{% if collection.description != blank %}<p>{{ collection.description | strip_html }}</p>{% else %}<p>Shop curated premium tech essentials with fast filtering, clear ratings, sale badges, and mobile-friendly product discovery.</p>{% endif %}</div>
+  <div class="collection-layout">
+    <aside class="filters glass-card"><h3>⚙ Filters</h3><label>Price<select><option>All prices</option><option>Under $50</option><option>$50–$100</option><option>$100+</option></select></label><label>Availability<select><option>In stock</option><option>Sale items</option><option>New arrivals</option></select></label><a class="filter-link" href="/collections/phone-accessories">Phone Accessories</a><a class="filter-link" href="/collections/smart-gadgets">Smart Gadgets</a><a class="filter-link" href="/collections/wireless-audio">Wireless Audio</a><a class="filter-link" href="/collections/gaming-accessories">Gaming Accessories</a><a class="filter-link" href="/collections/smart-home">Smart Home</a></aside>
+    <div class="collection-products">
+      <div class="sort-row"><span>{{ collection.products_count }} products</span><label>Sort <select onchange="location = this.value"><option value="{{ collection.url }}?sort_by=manual">Featured</option><option value="{{ collection.url }}?sort_by=best-selling">Best selling</option><option value="{{ collection.url }}?sort_by=price-ascending">Price, low to high</option><option value="{{ collection.url }}?sort_by=created-descending">Newest</option></select></label></div>
+      <div class="product-grid">{% paginate collection.products by 24 %}{% for product in collection.products %}{% render 'product-card', product: product %}{% else %}<p>No products found in this collection yet.</p>{% endfor %}{% if paginate.pages > 1 %}<nav class="pagination">{{ paginate | default_pagination }}</nav>{% endif %}{% endpaginate %}</div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{"name":"Main collection","settings":[]}
+{% endschema %}

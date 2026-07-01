@@ -1,0 +1,12 @@
+<article class="section">
+  <div class="section-heading">
+    <span class="eyebrow">{{ article.published_at | date: '%b %d, %Y' }}</span>
+    <h1>{{ article.title }}</h1>
+    {% if article.author != blank %}<p>By {{ article.author }}</p>{% endif %}
+  </div>
+  {% if article.image %}<img src="{{ article.image | image_url: width: 1400 }}" alt="{{ article.image.alt | default: article.title | escape }}" style="width:100%;border-radius:28px;max-height:560px;object-fit:cover;margin-bottom:28px">{% endif %}
+  <div class="glass-card" style="padding:32px;line-height:1.9;color:var(--muted)">{{ article.content }}</div>
+</article>
+{% schema %}
+{"name":"Main article","settings":[]}
+{% endschema %}
