@@ -11,7 +11,17 @@
       <div class="price-row large"><strong>{{ product.selected_or_first_available_variant.price | money }}</strong>{% if product.compare_at_price > product.price %}<s>{{ product.compare_at_price | money }}</s><span>Sale</span>{% endif %}</div>
       <ul class="benefit-list"><li>Premium tech essential selected for convenience, performance, and style.</li><li>Clear product details and secure Shopify checkout.</li><li>Fast processing, easy returns, and warranty reassurance.</li></ul>
       {% form 'product', product %}
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        {% unless product.has_only_default_variant %}
+          <label style="display:grid;gap:8px;margin:18px 0;color:var(--muted)">Variant
+            <select name="id">
+              {% for variant in product.variants %}
+                <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected{% endif %} {% unless variant.available %}disabled{% endunless %}>{{ variant.title }}{% unless variant.available %} — Sold out{% endunless %}</option>
+              {% endfor %}
+            </select>
+          </label>
+        {% else %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        {% endunless %}
         <label class="qty">Qty <input type="number" name="quantity" value="1" min="1"></label>
         <div class="buy-actions"><button class="btn primary" type="submit" {% unless product.available %}disabled{% endunless %}>{% if product.available %}Add to Cart{% else %}Sold Out{% endif %}</button>{{ form | payment_button }}</div>
       {% endform %}
