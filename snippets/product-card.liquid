@@ -2,7 +2,7 @@
 <article class="product-card glass-card">
   <a class="product-media" href="{{ product.url }}">
     {% if product_image %}<img src="{{ product_image | image_url: width: 800 }}" alt="{{ product_image.alt | default: product.title | escape }}" loading="lazy">{% else %}<div class="placeholder-svg">{{ 'product-1' | placeholder_svg_tag }}</div>{% endif %}
-    {% if product.compare_at_price > product.price %}<span class="sale-badge">Save {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%</span>{% endif %}
+    {% if product.compare_at_price > product.price %}{% assign discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}<span class="sale-badge">Save {{ discount }}%</span>{% endif %}
     <button class="wishlist" type="button" aria-label="Add {{ product.title | escape }} to wishlist">♡</button>
   </a>
   <div class="product-info">
@@ -10,7 +10,7 @@
     <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
     <div class="rating-row"><span class="stars">★★★★★</span><span>4.8{% if product.metafields.reviews.rating_count %} ({{ product.metafields.reviews.rating_count }}){% endif %}</span></div>
     <div class="price-row"><strong>{{ product.price | money }}</strong>{% if product.compare_at_price > product.price %}<s>{{ product.compare_at_price | money }}</s>{% endif %}</div>
-    {% form 'product', product, data-quick-add: true %}
+    {% form 'product', product, data-quick-add: '' %}
       <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
       <button class="quick-add" type="submit" {% unless product.available %}disabled{% endunless %}>{% if product.available %}Quick Add{% else %}Sold Out{% endif %}</button>
     {% endform %}
